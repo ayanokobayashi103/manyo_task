@@ -1,0 +1,17 @@
+<h1>Tasks#index</h1>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Content</th>
+  </tr>
+
+<% @tasks.each do |task| %>
+<tr>
+  <td> <%= task.title %></td>
+ <td><%= task.content %></td>
+ <td><%= link_to 'show', task_path(task.id) %></td>
+ <td><%= link_to 'edit', edit_task_path(task.id) %></td>
+ <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>
+
+<% end %>
+<%= link_to 'newtask', new_task_path %><br>

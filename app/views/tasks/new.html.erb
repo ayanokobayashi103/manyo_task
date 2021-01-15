@@ -1,0 +1,24 @@
+<h1>タスクの登録</h1>
+<%= link_to '一覧へ', tasks_path %>
+
+<%= form_with(model: @task, local: true) do |f| %>
+<% if @task.errors.any? %>
+<div class="alert alert-warning">
+  <ul>
+    <% @task.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+  <div class="task_title">
+   <%= f.label :title %>
+   <p><%= f.text_field :title %></p>
+  </div>
+  <div class="task_content">
+   <%= f.label :content %>
+   <p><%= f.text_field :content %></p>
+  </div>
+  <%= f.submit "Create my task" %>
+<% end %>
