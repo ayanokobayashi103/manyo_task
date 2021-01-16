@@ -12,16 +12,25 @@ RSpec.describe 'Task', type: :system do
     end
   end
   describe '一覧表示機能' do
+    let!(:task) { FactoryBot.create(:task, title: 'task') }
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, title: 'task')
         # タスク一覧ページに遷移
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
         expect(page).to have_content 'task'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        task_list = all('tr')
+        latest = task_list[1]
+        expect(latest).to have_content 'newest'
       end
     end
   end
