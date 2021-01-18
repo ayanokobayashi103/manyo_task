@@ -19,6 +19,10 @@
    <%= f.label :content %>
    <p><%= f.text_field :content %></p>
   </div>
+  <div class="task_deadline">
+   <%= f.label :deadline %>
+   <p><%= f.date_field :deadline %></p>
+  </div>
   <%= f.submit "Create my task" %>
 <% end %>
 <%= link_to '一覧へ', tasks_path %>

@@ -1,15 +1,18 @@
-<h1>Tasks#index</h1>
+<h1>Tasks Index</h1>
 <table>
   <tr>
     <th>タスク</th>
     <th>内容</th>
-    <th>作成日時</th>
+    <th><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %><%= link_to "作成日時でソートする", tasks_path(sort_created: "true") %></th>
   </tr>
+
   <% @tasks.each do |task| %>
+
     <tr>
       <td> <%= task.title %></td>
       <td><%= task.content %></td>
-      <td><%= l task.created_at, format: :long %></td>
+      <td><%= l task.deadline, formats: :short %>
+      <%= l task.created_at, formats: :short %></td>
       <td><%= link_to 'show', task_path(task.id) %></td>
       <td><%= link_to 'edit', edit_task_path(task.id) %></td>
       <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>

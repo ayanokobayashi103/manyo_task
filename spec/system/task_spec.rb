@@ -33,6 +33,16 @@ RSpec.describe 'Task', type: :system do
         expect(latest).to have_content 'newest'
       end
     end
+    context 'タスクが終了期限の降順に並んでいる場合' do
+      it '終了期限が近いものが一番上に表示される' do
+        FactoryBot.create(:second_task, deadline: Time.current + 3.days)
+        visit tasks_path
+        click_on '終了期限でソートする'
+        task_list = all('tr')
+        closest_deadline = task_list[1]
+        expect(closest_deadline).to have_content 'task'
+      end
+    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
