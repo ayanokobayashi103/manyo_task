@@ -1,4 +1,5 @@
 <h1>SHOW!</h1>
+<%=l @task.created_at, format: :long%><br>
 <%= @task.title %><br>
 <%= @task.content %><br>
 <%= link_to '一覧へ', tasks_path %>

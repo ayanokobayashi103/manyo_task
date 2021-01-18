@@ -1,17 +1,18 @@
 <h1>Tasks#index</h1>
 <table>
   <tr>
-    <th>Title</th>
-    <th>Content</th>
+    <th>タスク</th>
+    <th>内容</th>
+    <th>作成日時</th>
   </tr>
-
-<% @tasks.each do |task| %>
-<tr>
-  <td> <%= task.title %></td>
- <td><%= task.content %></td>
- <td><%= link_to 'show', task_path(task.id) %></td>
- <td><%= link_to 'edit', edit_task_path(task.id) %></td>
- <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>
-
-<% end %>
-<%= link_to 'newtask', new_task_path %><br>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td> <%= task.title %></td>
+      <td><%= task.content %></td>
+      <td><%= l task.created_at, format: :long %></td>
+      <td><%= link_to 'show', task_path(task.id) %></td>
+      <td><%= link_to 'edit', edit_task_path(task.id) %></td>
+      <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>
+    </tr>
+  <% end %>
+    <%= link_to 'newtask', new_task_path %><br>
