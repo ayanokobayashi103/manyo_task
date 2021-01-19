@@ -23,6 +23,7 @@
   <div class="task_deadline">
    <%= f.label :deadline %>
    <p><%= f.date_field :deadline %></p>
+   <p><%= f.hidden_field :status %></p>
   </div>
   <%= f.submit "Create my task" %>
 <% end %>

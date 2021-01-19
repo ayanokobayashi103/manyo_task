@@ -23,6 +23,8 @@
    <%= f.label :deadline %>
    <p><%= f.date_field :deadline %></p>
   </div>
+
+  <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %>
   <%= f.submit "Create my task" %>
 <% end %>
 <%= link_to '一覧へ', tasks_path %>

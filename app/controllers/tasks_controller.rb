@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     if  params[:sort_expired]
       @tasks = Task.all.order(deadline: :asc)
     end
+    @tasks = Task.where('title like ?',"%#{params[:search]}%") if params[:search].present?
   end
 
   def show
@@ -55,7 +56,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :status)
   end
 
   def set_task
