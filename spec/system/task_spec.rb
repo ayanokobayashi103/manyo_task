@@ -1,5 +1,45 @@
 require 'rails_helper'
 RSpec.describe 'Task', type: :system do
+  describe '検索機能' do
+    before do
+      FactoryBot.create(:task, title: "task", status: 2)
+      FactoryBot.create(:second_task, title: "sample")
+      visit tasks_path
+    end
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        fill_in 'search', with:'task'
+        click_on 'Search'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        select "完了", from: "status"
+        click_on 'Search'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        fill_in 'search', with:'sample'
+        select "未着手", from: "status"
+        click_on 'Search'
+        expect(page).to have_content 'newest'
+      end
+    end
+  end
+  describe '新規作成機能' do
+    context 'タスクを新規作成した場合' do
+      it '作成したタスクが表示される' do
+        visit new_task_path
+        fill_in 'task[title]', with:'task_title'
+        fill_in 'task[content]', with:'task_content'
+        click_on 'Create my task'
+        expect(page).to have_content '作成しました！'
+      end
+    end
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -28,6 +68,8 @@ RSpec.describe 'Task', type: :system do
       it '新しいタスクが一番上に表示される' do
         FactoryBot.create(:second_task)
         visit tasks_path
+        click_on '作成日時でソートする'
+        sleep(2)
         task_list = all('tr')
         latest = task_list[1]
         expect(latest).to have_content 'newest'
@@ -38,6 +80,7 @@ RSpec.describe 'Task', type: :system do
         FactoryBot.create(:second_task, deadline: Time.current + 3.days)
         visit tasks_path
         click_on '終了期限でソートする'
+        sleep(2)
         task_list = all('tr')
         closest_deadline = task_list[1]
         expect(closest_deadline).to have_content 'task'

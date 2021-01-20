@@ -1,7 +1,7 @@
 <h1>Tasks Index</h1>
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
 <%= f.label :search, '検索' %>
-<%= f.text_field :search %>
+<%= f.text_field :search, placeholder: "タイトルで検索" %>
 <%= f.label :sutatus, 'ステータス' %>
 <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true  %>
 
