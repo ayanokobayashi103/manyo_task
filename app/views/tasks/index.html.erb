@@ -5,6 +5,7 @@
 <%= f.label :sutatus, 'ステータス' %>
 <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true  %>
 
+
 <%= f.submit 'Search' %> <%= link_to 'Clear', tasks_path %>
 <% end %>
 
@@ -15,6 +16,7 @@
     <th><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></th>
     <th><%= link_to "作成日時でソートする", tasks_path(sort_created: "true") %></th>
     <th>進捗</th>
+    <th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
   </tr>
 
   <% @tasks.each do |task| %>
@@ -24,6 +26,8 @@
     <td><%= l task.deadline, formats: :short %></td>
     <td><%= l task.created_at, formats: :short %></td>
     <td><%= task.status %></td>
+    <td><%= task.priority %></td>
+
     <td><%= link_to 'show', task_path(task.id) %></td>
     <td><%= link_to 'edit', edit_task_path(task.id) %></td>
     <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>

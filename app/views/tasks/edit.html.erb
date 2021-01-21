@@ -25,6 +25,7 @@
   </div>
 
   <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %>
+  <%= f.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]],include_blank: true %>
   <%= f.submit "Update my task" %>
 <% end %>
 <%= link_to '一覧へ', tasks_path %>

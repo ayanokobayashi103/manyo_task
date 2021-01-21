@@ -1,12 +1,11 @@
 require 'rails_helper'
 describe 'タスクモデル機能', type: :model do
+  
   describe '検索機能' do
-    # 必要に応じて、テストデータの内容を変更して構わない
     let!(:task) { FactoryBot.create(:task, title: 'task', status: 2) }
     let!(:second_task) { FactoryBot.create(:second_task, title: "sample") }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
-        # title_seachはscopeで提示したタイトル検索用メソッドである。メソッド名は任意で構わない。
         expect(Task.title_search('task')).to include(task)
         expect(Task.title_search('task')).not_to include(second_task)
         expect(Task.title_search('task').count).to eq 1
@@ -14,16 +13,18 @@ describe 'タスクモデル機能', type: :model do
     end
     context 'scopeメソッドでステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
-        # enumの完了：2のインスタンスにtaskが含まれているか
-        expect(Task.status_search(2)).to include(task)
-        # 文字列のsampleが含まれているか
-        expect(Task.status_search(2)).not_to include("sample")
-        expect(Task.status_search(2).count).to eq 1
+        status = Task.status_search(2)
+        expect(status).to include(task)
+        expect(status).not_to include("sample")
+        expect(status.count).to eq 1
       end
     end
     context 'scopeメソッドでタイトルのあいまい検索とステータス検索をした場合' do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
-        # ここに内容を記載する
+        third_task = FactoryBot.create(:third_task, title: 'task', status: 1)
+        title_and_status = Task.status_search(1).title_search('task')
+        expect(title_and_status).to include(third_task)
+        expect(title_and_status.count).to eq 1
       end
     end
   end
