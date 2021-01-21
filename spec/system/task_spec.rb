@@ -40,19 +40,9 @@ RSpec.describe 'Task', type: :system do
       end
     end
   end
-  describe '新規作成機能' do
-    context 'タスクを新規作成した場合' do
-      it '作成したタスクが表示される' do
-        visit new_task_path
-        fill_in 'task[title]', with:'task_title'
-        fill_in 'task[content]', with:'task_content'
-        click_on 'Create my task'
-        expect(page).to have_content '作成しました！'
-      end
-    end
-  end
+
   describe '一覧表示機能' do
-    let!(:task) { FactoryBot.create(:task, title: 'task') }
+    let!(:task) { FactoryBot.create(:task, title: 'task', priority: 1) }
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成
@@ -84,6 +74,17 @@ RSpec.describe 'Task', type: :system do
         task_list = all('tr')
         closest_deadline = task_list[1]
         expect(closest_deadline).to have_content 'task'
+      end
+    end
+    context '優先順位が高い順に並んでいる場合' do
+      it '優先度の高が一番上に表示される' do
+        FactoryBot.create(:second_task, priority: 3)
+        visit tasks_path
+        click_on '優先度'
+        sleep(2)
+        priority = all('tr')
+        high_priority = priority[1]
+        expect(high_priority).to have_content '高'
       end
     end
   end

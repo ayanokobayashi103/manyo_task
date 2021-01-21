@@ -3,13 +3,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :show, :update, :destroy]
 
   def index
-
+    @tasks = Task.all
     if params[:sort_created]
-      @tasks = Task.all.created_sort
+      @tasks = @tasks.created_sort
     elsif  params[:sort_expired]
-      @tasks = Task.all.deadline_sort
+      @tasks = @tasks.deadline_sort
     elsif  params[:sort_priority]
-      @tasks = Task.all.priority_sort
+      @tasks = @tasks.priority_sort
     end
 
     if params[:status].present? && params[:search].present?
