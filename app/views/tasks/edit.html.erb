@@ -23,9 +23,13 @@
    <%= f.label :deadline %>
    <p><%= f.date_field :deadline %></p>
   </div>
-
-  <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %>
-  <%= f.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]],include_blank: true %>
-  <%= f.submit "Update my task" %>
+  <div class="task_status">
+    <%= f.label :status %>
+    <p><%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %></p>
+  </div>
+  <div class="task_priority">
+    <%= f.label :priority %>
+    <p><%= f.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]],include_blank: true %></p>
+  </div>  <%= f.submit "Update my task" %>
 <% end %>
 <%= link_to '一覧へ', tasks_path %>

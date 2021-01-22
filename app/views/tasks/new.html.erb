@@ -23,8 +23,11 @@
   <div class="task_deadline">
    <%= f.label :deadline %>
    <p><%= f.date_field :deadline %></p>
-   <p><%= f.hidden_field :status %></p>
-    <p><%= f.hidden_field :priotity %></p>
+  </div>
+  <p><%= f.hidden_field :status %></p>
+  <div class="task_priority">
+    <%= f.label :priority %>
+    <p><%= f.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]],include_blank: true %></p>
   </div>
   <%= f.submit "Create my task" %>
 <% end %>

@@ -3,7 +3,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :show, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.page(params[:page]).per(5)
+
     if params[:sort_created]
       @tasks = @tasks.created_sort
     elsif  params[:sort_expired]
@@ -14,10 +15,13 @@ class TasksController < ApplicationController
 
     if params[:status].present? && params[:search].present?
       @tasks = Task.status_search(params[:status]).title_search(params[:search])
+      @tasks = @tasks.page(params[:page])
     elsif params[:status].present?
       @tasks = Task.status_search(params[:status])
+      @tasks = @tasks.page(params[:page])
     elsif params[:search].present?
       @tasks = Task.title_search(params[:search])
+      @tasks = @tasks.page(params[:page])
     end
   end
 

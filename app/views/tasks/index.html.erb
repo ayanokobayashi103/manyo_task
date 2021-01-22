@@ -1,21 +1,28 @@
-<h1>Tasks Index</h1>
+<h1>タスク一覧</h1>
+<br>
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
-<%= f.label :search, '検索' %>
-<%= f.text_field :search, placeholder: "タイトルで検索" %>
-<%= f.label :sutatus, 'ステータス' %>
-<%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true  %>
-<%= f.submit 'Search' %> <%= link_to 'Clear', tasks_path %>
+  <%= f.label :search, '検索' %>
+  <%= f.text_field :search, placeholder: "タイトルで検索" %>
+  <%= f.label :sutatus, '進捗検索' %>
+  <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true %>
+  <%= f.submit 'Search',class:"btn btn-primary" %>
+  <%= link_to 'Clear', tasks_path, class:"btn btn-default" %>
 <% end %>
-
-<table>
-  <tr>
-    <th>タスク</th>
-    <th>内容</th>
-    <th><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></th>
-    <th><%= link_to "作成日時でソートする", tasks_path(sort_created: "true") %></th>
-    <th>進捗</th>
-    <th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
-  </tr>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></th>
+      <th><%= link_to "作成日時でソートする", tasks_path(sort_created: "true") %></th>
+      <th>進捗</th>
+      <th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th>みる</th>
+      <th>かえる</th>
+      <th>すてる</th>
+    </tr>
+  </thead>
 
   <% @tasks.each do |task| %>
   <tr>
@@ -25,10 +32,23 @@
     <td><%= l task.created_at, formats: :short %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <td><%= link_to 'show', task_path(task.id) %></td>
-    <td><%= link_to 'edit', edit_task_path(task.id) %></td>
-    <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-default" %></td>
+    <td>
+      <%= link_to task_path(task.id), class:"btn btn-warning btn-xs" do %>
+      <i class="far fa-eye"></i>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to (edit_task_path(task.id)), class:"btn btn-primary btn-xs" do  %>
+      <i class="fas fa-pen"></i>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' },class: "btn btn-danger btn-xs" do %>
+      <i class="fas fa-trash-alt"></i>
+      <% end %>
+    </td>
   </tr>
   <% end %>
 </table>
 <%= link_to '新規タスク作成', new_task_path %><br>
+<%= paginate @tasks %>
