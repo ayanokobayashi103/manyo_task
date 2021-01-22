@@ -8,6 +8,9 @@ ja:
       task:
         title: タイトル
         content: 内容
+        deadline: 終了期限
+        priority: 優先度
+        status: 進捗状況 
       user:
         title: タイトル
         name: 名前
@@ -216,7 +219,7 @@ ja:
   time:
     am: 午前
     formats:
-      default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      default: "%Y年%m月%d日(%a)"
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
