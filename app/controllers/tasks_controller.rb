@@ -4,7 +4,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :show, :update, :destroy]
 
   def index
-    @tasks = Task.page(params[:page]).per(5)
+    # .tasksはmodelのアソシエーションメソッド
+    @task = current_user.tasks
+    @tasks = @task.page(params[:page]).per(5)
 
     if params[:sort_created]
       @tasks = @tasks.created_sort
