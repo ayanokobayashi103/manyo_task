@@ -1,0 +1,6 @@
+<h1>管理画面：ユーザーの一覧</h1>
+<% @users. each do |user|%>
+<p><%= user.id %>:<%= user.name %></p>
+<%= link_to '削除', admin_user_path(user.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %>
+
+<% end %>
