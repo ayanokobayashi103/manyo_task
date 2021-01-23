@@ -1,6 +1,6 @@
 <div class = "container">
   <div class = "card auth-card">
-    <h1>Sign up</h1>
+    <h1>新規ユーザー登録</h1>
     <% if @user.errors.any? %>
     <div class="alert alert-warning" role="alert">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
@@ -25,3 +25,4 @@
     <% end %>
   </div>
 </div>
+<%= link_to '管理画面へ', admin_users_path %>

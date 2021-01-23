@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-   before_action :if_not_admin
+  before_action :if_not_admin
   before_action :set_user, only: [:edit, :show, :update, :destroy]
 
   def index
@@ -47,6 +47,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def if_not_admin
-      redirect_to tasks_path unless current_user.admin?
-    end
+      redirect_to tasks_path, notice: '管理者のみアクセスできます' unless current_user.admin?
+  end
+
 end
