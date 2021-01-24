@@ -1,0 +1,26 @@
+<h1><%= @user.name %>のタスク一覧</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th>終了期限でソートする</th>
+      <th>作成日時でソートする</th>
+      <th>進捗状況</th>
+      <th>優先度</th>
+    </tr>
+  </thead>
+
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.title %></td>
+    <td><%= task.content %></td>
+    <td><%= l task.deadline, formats: :short %></td>
+    <td><%= l task.created_at, formats: :short %></td>
+    <td><%= task.status %></td>
+    <td><%= task.priority %></td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to '管理画面へ', admin_users_path %>
