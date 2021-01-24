@@ -1,4 +1,7 @@
 <h1>管理画面：ユーザーの一覧</h1>
+
+
+
 <% @users. each do |user|%>
 <p>
   <%= user.id %>:<%= user.name %>のタスクは<%= user.tasks.count %>こ
