@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  before_destroy :admin_destroy
+  before_destroy :admin_lastone_destroy
+  before_save :admin_lastone_save
   validates :name,  presence: true, length: { maximum: 30 }
   validates :email, presence: true, length: { maximum: 255 }, uniqueness: true,
                       format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
@@ -9,15 +10,25 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   private
-  def admin_destroy
+  def admin_lastone_destroy
     if admin?
       admin=User.where(admin:true)
       if admin.count > 0
-        # errors.add(:admin, ": 管理者がいなくなってしまいます")
+         errors.add(:admin, ": 管理者がいなくなってしまいます")
         # returnと言う意味
         throw :abort
       end
     end
   end
-  
+
+  def admin_lastone_save
+    unless admin?
+      admin=User.where(admin:true)
+      if admin.count > 0
+         errors.add(:admin, ": 管理者がいなくなってしまいます")
+        throw :abort
+      end
+    end
+  end
+
 end

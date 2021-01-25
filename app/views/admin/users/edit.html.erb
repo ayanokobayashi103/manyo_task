@@ -23,7 +23,7 @@
     <p><%= f.password_field :password_confirmation %></p>
     <div class="form-group">
       <%= f.label :admin, "管理者設定" %>
-      <%= f.check_box :admin,{} , true, false %>
+      <%= f.check_box :admin, {} , "true", "false" %>
     </div>
     <%= f.submit "Update this account" %>
     <% end %>
