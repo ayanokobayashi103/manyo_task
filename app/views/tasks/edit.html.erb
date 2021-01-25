@@ -30,6 +30,7 @@
   <div class="task_priority">
     <%= f.label :priority %>
     <p><%= f.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]],include_blank: true %></p>
-  </div>  <%= f.submit "Update my task" %>
+  </div>
+  <%= f.submit "Update my task" %>
 <% end %>
 <%= link_to '一覧へ', tasks_path %>

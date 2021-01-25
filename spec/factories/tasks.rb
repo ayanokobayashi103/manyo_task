@@ -7,7 +7,6 @@ FactoryBot.define do
     title { 'Factoryで作ったデフォルトのタイトルnewest' }
     content { 'Factoryで作ったデフォルトのコンテントnewest' }
   end
-
   factory :third_task, class: Task do
     title { 'Factoryで作ったデフォルトのタイトル3' }
     content { 'Factoryで作ったデフォルトのコンテント3' }

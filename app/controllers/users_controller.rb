@@ -28,8 +28,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update
-      redirect_to
+    if @user.update(user_params)
+      redirect_to admin_users_path,notice:"#{@user.name}を編集しました"
     else
       render :edit
     end

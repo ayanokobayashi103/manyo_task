@@ -23,11 +23,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    if @user.update
-      redirect_to
-    else
-      render :edit
-    end
   end
 
   def show
