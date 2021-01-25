@@ -12,7 +12,7 @@
     </div>
     <% end %>
 
-    <%= form_with(model: @user, local: true) do |f| %>
+    <%= form_with(model: @user, local: true,url: admin_users_path) do |f| %>
     <%= f.label :name %>
     <p><%= f.text_field :name %></p>
     <%= f.label :email %>

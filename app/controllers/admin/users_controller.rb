@@ -23,6 +23,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    if @user.update(user_params)
+      redirect_to admin_users_path,notice:"#{@user.name}を編集しました"
+    else
+      render :edit
+    end
   end
 
   def show
@@ -40,7 +45,7 @@ class Admin::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
 
   def set_user
