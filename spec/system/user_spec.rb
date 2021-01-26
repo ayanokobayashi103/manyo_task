@@ -23,7 +23,6 @@ RSpec.describe 'User', type: :system do
       end
     end
   end
-
   describe 'セッション機能のテスト' do
     before do
       FactoryBot.create(:user)
@@ -59,7 +58,6 @@ RSpec.describe 'User', type: :system do
       end
     end
   end
-
   describe '管理画面のテスト' do
     let!(:user) { FactoryBot.create(:user, id:1) }
     context '一般ユーザは管理画面にアクセスできないこと' do
@@ -104,11 +102,11 @@ RSpec.describe 'User', type: :system do
         click_on 'Update this account'
         expect(page).to have_content 'user1を編集しました'
       end
-
       it '管理ユーザはユーザの削除をできること' do
         visit admin_users_path
-        binding.pry
-        page.all("削除")[1].click
+        page.all(".delete-user")[1].click
+        #  page.driver.browser.switch_to.alert.accept
+         page.accept_confirm
         expect(page).to have_content '削除しました'
       end
     end
