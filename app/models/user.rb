@@ -11,17 +11,15 @@ class User < ApplicationRecord
 
   private
   def admin_lastone_destroy
-    # 残りの管理者が1人、もしくは1人以下かつ、送られてきた削除する値が管理者だった場合以下実行
     if User.where(admin: true).count <= 1 && self.admin == true
       throw :abort
     end
   end
 
   def admin_lastone_save
-    # 残りの管理者が1人になったかつ、変更する値が管理者ではない(なくなる)場合
     if User.where(admin: true).count == 0 && self.admin == false
       errors.add(:admin, ": 管理者がいなくなってしまいます")
-      raise ActiveRecord::RecordInvalid, self
+      raise ActiveRecord::RecordInvalid
     end
   end
 end

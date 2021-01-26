@@ -1,7 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'User', type: :system do
   before do
-    # 管理者が0人になってしまうので最小に管理者を作成
     FactoryBot.create(:admin_user)
   end
   describe 'ユーザ登録のテスト' do
@@ -23,6 +22,7 @@ RSpec.describe 'User', type: :system do
       end
     end
   end
+
   describe 'セッション機能のテスト' do
     before do
       FactoryBot.create(:user)
@@ -58,6 +58,7 @@ RSpec.describe 'User', type: :system do
       end
     end
   end
+
   describe '管理画面のテスト' do
     let!(:user) { FactoryBot.create(:user, id:1) }
     context '一般ユーザは管理画面にアクセスできないこと' do
@@ -73,7 +74,6 @@ RSpec.describe 'User', type: :system do
     context '管理ユーザは管理画面にアクセスできること' do
       before do
         visit new_session_path
-        #　管理者がログイン
         fill_in 'session[email]', with:'admin@a.com'
         fill_in 'session[password]', with:'adminpass'
         click_on 'Log in'
