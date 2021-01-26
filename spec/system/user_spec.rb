@@ -1,5 +1,9 @@
 require 'rails_helper'
 RSpec.describe 'User', type: :system do
+  before do
+    # 管理者が0人になってしまうので最小に管理者を作成
+    FactoryBot.create(:admin_user)
+  end
   describe 'ユーザ登録のテスト' do
     context 'ユーザの新規登録ができること' do
       it '作成したタスクが表示される' do
@@ -58,7 +62,6 @@ RSpec.describe 'User', type: :system do
 
   describe '管理画面のテスト' do
     let!(:user) { FactoryBot.create(:user, id:1) }
-    let!(:admin_user) { FactoryBot.create(:admin_user) }
     context '一般ユーザは管理画面にアクセスできないこと' do
       it 'ユーザーのページに戻ってくること' do
         visit new_session_path
@@ -72,6 +75,7 @@ RSpec.describe 'User', type: :system do
     context '管理ユーザは管理画面にアクセスできること' do
       before do
         visit new_session_path
+        #　管理者がログイン
         fill_in 'session[email]', with:'admin@a.com'
         fill_in 'session[password]', with:'adminpass'
         click_on 'Log in'
@@ -93,12 +97,10 @@ RSpec.describe 'User', type: :system do
         visit admin_user_path(1)
         expect(page).to have_content 'user1のタスク一覧'
       end
-
       it '管理ユーザはユーザの編集画面からユーザを編集できること' do
         visit edit_admin_user_path(1)
         fill_in 'user[password]', with:'password'
         fill_in 'user[password_confirmation]', with:'password'
-        binding.pry
         click_on 'Update this account'
         expect(page).to have_content 'user1を編集しました'
       end
@@ -106,7 +108,7 @@ RSpec.describe 'User', type: :system do
       it '管理ユーザはユーザの削除をできること' do
         visit admin_users_path
         binding.pry
-        click_on '削除'
+        page.all("削除")[1].click
         expect(page).to have_content '削除しました'
       end
     end
