@@ -37,7 +37,7 @@ RSpec.describe 'Task', type: :system do
       end
     end
   end
-  
+
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -51,15 +51,16 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '一覧表示機能' do
+    before do
+      visit tasks_path
+    end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        visit tasks_path
         expect(page).to have_content 'task'
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        visit tasks_path
         click_on '作成日時でソートする'
         sleep(1)
         task_list = all('tr')
@@ -69,7 +70,6 @@ RSpec.describe 'Task', type: :system do
     end
     context 'タスクが終了期限の降順に並んでいる場合' do
       it '終了期限が近いものが一番上に表示される' do
-        visit tasks_path
         click_on '終了期限でソートする'
         sleep(1)
         task_list = all('tr')
@@ -79,7 +79,6 @@ RSpec.describe 'Task', type: :system do
     end
     context '優先順位が高い順に並んでいる場合' do
       it '優先度の高が一番上に表示される' do
-        visit tasks_path
         click_on '優先度'
         sleep(1)
         priority = all('tr')
@@ -92,7 +91,7 @@ RSpec.describe 'Task', type: :system do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
         visit tasks_path
-        visit task_path(2)
+        page.all("#show_link")[1].click
         expect(page).to have_content 'sample'
       end
     end
