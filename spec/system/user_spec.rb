@@ -89,7 +89,7 @@ RSpec.describe 'User', type: :system do
         fill_in 'user[password]', with:'password'
         fill_in 'user[password_confirmation]', with:'password'
         click_on 'Create this account'
-        expect(page).to have_content '新しいユーザー'
+        expect(page).to have_content '新規登録しました！'
       end
       it '管理ユーザはユーザの詳細画面にアクセスできること' do
         visit admin_user_path(1)
@@ -97,8 +97,6 @@ RSpec.describe 'User', type: :system do
       end
       it '管理ユーザはユーザの編集画面からユーザを編集できること' do
         visit edit_admin_user_path(1)
-        fill_in 'user[password]', with:'password'
-        fill_in 'user[password_confirmation]', with:'password'
         click_on 'Update this account'
         expect(page).to have_content 'user1を編集しました'
       end
