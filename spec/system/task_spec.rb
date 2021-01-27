@@ -8,7 +8,7 @@ RSpec.describe 'Task', type: :system do
     fill_in 'session[password]', with:'userpass1'
     click_on 'Log in'
     FactoryBot.create(:task, title: 'task', status: 2, priority: 1,user: user1)
-    FactoryBot.create(:second_task, title: 'sample', deadline: Time.current + 3.days, priority: 3,user: user1)
+    FactoryBot.create(:second_task, id:2,title: 'sample', deadline: Time.current + 3.days, priority: 3,user: user1)
   end
   describe '検索機能' do
     before do
@@ -37,7 +37,7 @@ RSpec.describe 'Task', type: :system do
       end
     end
   end
-
+  
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -51,7 +51,6 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '一覧表示機能' do
-
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         visit tasks_path
@@ -93,7 +92,7 @@ RSpec.describe 'Task', type: :system do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
         visit tasks_path
-        page.all(".btn btn-warning btn-xs")[1].click
+        visit task_path(2)
         expect(page).to have_content 'sample'
       end
     end
