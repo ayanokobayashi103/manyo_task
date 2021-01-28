@@ -2,6 +2,7 @@ require 'rails_helper'
 RSpec.describe 'User', type: :system do
   before do
     FactoryBot.create(:admin_user)
+    FactoryBot.create(:user)
   end
   describe 'ユーザ登録のテスト' do
     context 'ユーザの新規登録ができること' do
@@ -25,7 +26,6 @@ RSpec.describe 'User', type: :system do
 
   describe 'セッション機能のテスト' do
     before do
-      FactoryBot.create(:user)
       visit new_session_path
       fill_in 'session[email]', with:'user@u.com'
       fill_in 'session[password]', with:'userpass1'
@@ -45,8 +45,8 @@ RSpec.describe 'User', type: :system do
     end
     context '他人の詳細画面に飛べないこと' do
       it '自分のタスク一覧に遷移する' do
-        FactoryBot.create(:user2, id: 2)
-        visit user_path(2)
+        user2=FactoryBot.create(:user2)
+        visit user_path(user2)
         expect(page).to have_content 'エラー'
       end
     end
@@ -60,7 +60,6 @@ RSpec.describe 'User', type: :system do
   end
 
   describe '管理画面のテスト' do
-    let!(:user) { FactoryBot.create(:user, id:1) }
     context '一般ユーザは管理画面にアクセスできないこと' do
       it 'ユーザーのページに戻ってくること' do
         visit new_session_path
@@ -92,11 +91,14 @@ RSpec.describe 'User', type: :system do
         expect(page).to have_content '新規登録しました！'
       end
       it '管理ユーザはユーザの詳細画面にアクセスできること' do
-        visit admin_user_path(1)
+        visit admin_users_path
+        page.all(".show-user")[1].click
         expect(page).to have_content 'user1のタスク一覧'
       end
       it '管理ユーザはユーザの編集画面からユーザを編集できること' do
-        visit edit_admin_user_path(1)
+        visit admin_users_path
+        page.all(".edit-user")[1].click
+        fill_in 'user[name]', with:'user1'
         click_on 'Update this account'
         expect(page).to have_content 'user1を編集しました'
       end
