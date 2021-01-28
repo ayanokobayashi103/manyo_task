@@ -25,9 +25,9 @@
 
 * Table
 
-| user     | label   | task    |
-| -------- | ------- | ------- |
-| id       | id      | id      |
-| name     | user_id | task_id |
-| email    |         | title   |
-| passward |         | content |
+| user     | label   | task     |
+| -------- | ------- | -------- |
+| id       | id      | id       |
+| name     | user_id | label_id |
+| email    |         | title    |
+| password |         | content  | 

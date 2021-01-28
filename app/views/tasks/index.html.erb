@@ -33,7 +33,7 @@
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
     <td>
-      <%= link_to task_path(task.id), class:"btn btn-warning btn-xs" do %>
+      <%= link_to task_path(task.id), id:"show_link", class:"btn btn-warning btn-xs" do %>
       <i class="far fa-eye"></i>
       <% end %>
     </td>

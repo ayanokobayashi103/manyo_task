@@ -10,7 +10,7 @@ ja:
         content: 内容
         deadline: 終了期限
         priority: 優先度
-        status: 進捗状況 
+        status: 進捗状況
       user:
         title: タイトル
         name: 名前

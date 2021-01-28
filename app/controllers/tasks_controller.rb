@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
   before_action :basic_auth, if: :production?
+  before_action :authenticate_user
   before_action :set_task, only: [:edit, :show, :update, :destroy]
 
   def index
-    @tasks = Task.page(params[:page]).per(5)
+    @task = current_user.tasks
+    @tasks = @task.page(params[:page]).per(5)
 
     if params[:sort_created]
       @tasks = @tasks.created_sort
@@ -26,7 +28,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def new
@@ -35,6 +36,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to tasks_path, notice: "作成しました！"
     else
@@ -43,7 +45,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def update
