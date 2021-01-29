@@ -17,4 +17,5 @@ FactoryBot.define do
     status {1}
     deadline {Time.current + 3.days }
   end
+
 end

@@ -1,6 +1,11 @@
 FactoryBot.define do
   factory :label do
-    user_id { 1 }
-    task_id { 1 }
+    name { 'ラベル1' }
+  end
+  factory :label2, class: Label do
+    name { 'ラベル2' }
+  end
+  factory :label3, class: Label do
+    name { 'ラベル3' }
   end
 end

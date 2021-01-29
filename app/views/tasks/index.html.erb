@@ -5,13 +5,13 @@
   <%= f.text_field :search, placeholder: "タイトルで検索" %>
   <%= f.label :sutatus, '進捗検索' %>
   <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true %>
-  <%= f.submit 'Search',class:"btn btn-primary" %>
+  <%= f.submit 'Search',class:"btn btn-primary",id:"status_search" %>
   <%= link_to 'Clear', tasks_path, class:"btn btn-default" %>
 <% end %>
 
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
   <%= f.select :label_id, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
-  <%= f.submit 'Search' %>
+  <%= f.submit 'Search', id:"label_search" %>
 <% end %>
 
 <br>
@@ -39,7 +39,7 @@
     <td><%= l task.created_at, formats: :short %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <td>
+    <td >
       <% task.labels.each do |label| %>
         <%= label.name %>
       <% end %>
@@ -50,7 +50,7 @@
       <% end %>
     </td>
     <td>
-      <%= link_to (edit_task_path(task.id)), class:"btn btn-primary btn-xs" do  %>
+      <%= link_to (edit_task_path(task.id)),id:"edit_link", class:"btn btn-primary btn-xs" do  %>
       <i class="fas fa-pen"></i>
       <% end %>
     </td>
