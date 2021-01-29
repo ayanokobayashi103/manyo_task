@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'faker'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'

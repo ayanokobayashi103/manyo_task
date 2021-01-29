@@ -12,3 +12,26 @@ User.create!(
   password_confirmation: 'testarou',
   admin: true
 )
+
+5.times do |n|
+  Label.create!(
+    name: "ラベル#{n + 1}",
+  )
+end
+
+10.times do |n|
+  User.create!(
+    name:  "ユーザー#{n + 1}",
+    email: "user#{n + 1}@test.com",
+    password: 'password',
+    password_confirmation: 'password',
+  )
+end
+
+10.times do |n|
+  Task.create!(
+    title:  "タスク#{n + 1}",
+    content: "タスク#{n + 1}をやる",
+    user_id: 1
+  )
+end

@@ -10,8 +10,9 @@
 <% end %>
 
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <%= f.label :search, 'ラベルで検索' %>
   <%= f.select :label_id, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
-  <%= f.submit 'Search', id:"label_search" %>
+  <%= f.submit 'Search',class:"btn btn-primary", id:"label_search" %>
 <% end %>
 
 <br>
