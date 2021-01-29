@@ -12,3 +12,9 @@ User.create!(
   password_confirmation: 'testarou',
   admin: true
 )
+
+5.times do |n|
+  Label.create!(
+    name: "ラベル#{n + 1}",
+  )
+end

@@ -2,4 +2,8 @@
 <%=l @task.created_at, format: :long%><br>
 <%= @task.title %><br>
 <%= @task.content %><br>
+<% @task.labels.each do |label| %>
+  <%= label.name %>
+<% end %><br>
+
 <%= link_to '一覧へ', tasks_path %>
