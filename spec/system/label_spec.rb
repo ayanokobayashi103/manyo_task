@@ -22,8 +22,8 @@ RSpec.describe 'Label', type: :system do
         check 'ラベル1'
         check 'ラベル2'
         click_on '登録する'
-        label_list = all("tr")
         sleep(1)
+        label_list = all("tr")
         label_list = label_list[3]
         expect(label_list).to have_content'ラベル1'
         expect(label_list).to have_content'ラベル2'
@@ -37,8 +37,8 @@ RSpec.describe 'Label', type: :system do
         uncheck 'ラベル1'
         check 'ラベル2'
         click_on '更新する'
-        label_list = all("tr")
         sleep(1)
+        label_list = all("tr")
         label_list = label_list[1]
         expect(label_list).to have_content'ラベル2'
         expect(label_list).not_to have_content 'ラベル1'
@@ -49,8 +49,8 @@ RSpec.describe 'Label', type: :system do
         visit tasks_path
         select "ラベル1", from: "label_id"
         find("#label_search").click
-        label_list = all("tr")
         sleep(1)
+        label_list = all("tr")
         label_1 = label_list[1]
         expect(label_1).to have_content'ラベル1'
         expect(label_1).not_to have_content 'ラベル2'
