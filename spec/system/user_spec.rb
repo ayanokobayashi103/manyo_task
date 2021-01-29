@@ -45,7 +45,7 @@ RSpec.describe 'User', type: :system do
     end
     context '他人の詳細画面に飛べないこと' do
       it '自分のタスク一覧に遷移する' do
-        user2=FactoryBot.create(:user2)
+        user2 = FactoryBot.create(:user2)
         visit user_path(user2)
         expect(page).to have_content 'エラー'
       end

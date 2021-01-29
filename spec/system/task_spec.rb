@@ -7,7 +7,7 @@ RSpec.describe 'Task', type: :system do
     fill_in 'session[email]', with:'user@u.com'
     fill_in 'session[password]', with:'userpass1'
     click_on 'Log in'
-    FactoryBot.create(:task, title: 'task',user: user1)
+    FactoryBot.create(:task, title: 'task', user: user1)
     FactoryBot.create(:second_task, user: user1)
   end
   describe '検索機能' do
