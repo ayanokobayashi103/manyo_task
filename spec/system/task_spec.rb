@@ -17,15 +17,14 @@ RSpec.describe 'Task', type: :system do
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         fill_in 'search', with:'task'
-        page.all("#status_search")[0].click
-
+        find("#status_search").click
         expect(page).to have_content 'task'
       end
     end
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         select "完了", from: "status"
-        page.all("#status_search")[0].click
+        find("#status_search").click
         expect(page).to have_content 'task'
       end
     end
@@ -33,7 +32,7 @@ RSpec.describe 'Task', type: :system do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         fill_in 'search', with:'sample'
         select "未着手", from: "status"
-        page.all("#status_search")[0].click
+        find("#status_search").click
         expect(page).to have_content 'newest'
       end
     end

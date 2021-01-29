@@ -39,7 +39,7 @@
     <td><%= l task.created_at, formats: :short %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <td >
+    <td>
       <% task.labels.each do |label| %>
         <%= label.name %>
       <% end %>
