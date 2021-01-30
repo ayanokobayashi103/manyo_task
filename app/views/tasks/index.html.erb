@@ -5,9 +5,16 @@
   <%= f.text_field :search, placeholder: "タイトルで検索" %>
   <%= f.label :sutatus, '進捗検索' %>
   <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]],include_blank: true %>
-  <%= f.submit 'Search',class:"btn btn-primary" %>
+  <%= f.submit 'Search',class:"btn btn-primary",id:"status_search" %>
   <%= link_to 'Clear', tasks_path, class:"btn btn-default" %>
 <% end %>
+
+<%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <%= f.label :search, 'ラベルで検索' %>
+  <%= f.select :label_id, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
+  <%= f.submit 'Search',class:"btn btn-primary", id:"label_search" %>
+<% end %>
+
 <br>
 <table class="table table-striped">
   <thead>
@@ -18,6 +25,7 @@
       <th><%= link_to "作成日時でソートする", tasks_path(sort_created: "true") %></th>
       <th>進捗状況</th>
       <th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th>ラベル</th>
       <th>みる</th>
       <th>かえる</th>
       <th>すてる</th>
@@ -33,12 +41,17 @@
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
     <td>
+      <% task.labels.each do |label| %>
+        <%= label.name %>
+      <% end %>
+    </td>
+    <td>
       <%= link_to task_path(task.id), id:"show_link", class:"btn btn-warning btn-xs" do %>
       <i class="far fa-eye"></i>
       <% end %>
     </td>
     <td>
-      <%= link_to (edit_task_path(task.id)), class:"btn btn-primary btn-xs" do  %>
+      <%= link_to (edit_task_path(task.id)),id:"edit_link", class:"btn btn-primary btn-xs" do  %>
       <i class="fas fa-pen"></i>
       <% end %>
     </td>
@@ -50,5 +63,6 @@
   </tr>
   <% end %>
 </table>
+
 <%= link_to '新規タスク作成', new_task_path %><br>
 <%= paginate @tasks %>

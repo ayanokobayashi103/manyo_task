@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     elsif  params[:sort_priority]
       @tasks = @tasks.priority_sort
     end
-
+    
     if params[:status].present? && params[:search].present?
       @tasks = Task.status_search(params[:status]).title_search(params[:search])
       @tasks = @tasks.page(params[:page])
@@ -24,6 +24,11 @@ class TasksController < ApplicationController
     elsif params[:search].present?
       @tasks = Task.title_search(params[:search])
       @tasks = @tasks.page(params[:page])
+    end
+
+    if params[:label_id].present?
+      @labels = Labelling.where(label_id: params[:label_id]).pluck(:task_id)
+      @tasks = @tasks.where(id: @labels)
     end
   end
 
@@ -72,7 +77,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
+    params.require(:task).permit(:title, :content, :deadline, :status, :priority,{ label_ids: [] })
   end
 
   def set_task

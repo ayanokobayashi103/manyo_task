@@ -7,7 +7,7 @@ RSpec.describe 'Task', type: :system do
     fill_in 'session[email]', with:'user@u.com'
     fill_in 'session[password]', with:'userpass1'
     click_on 'Log in'
-    FactoryBot.create(:task, title: 'task',user: user1)
+    FactoryBot.create(:task, title: 'task', user: user1)
     FactoryBot.create(:second_task, user: user1)
   end
   describe '検索機能' do
@@ -17,14 +17,14 @@ RSpec.describe 'Task', type: :system do
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         fill_in 'search', with:'task'
-        click_on 'Search'
+        find("#status_search").click
         expect(page).to have_content 'task'
       end
     end
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         select "完了", from: "status"
-        click_on 'Search'
+        find("#status_search").click
         expect(page).to have_content 'task'
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe 'Task', type: :system do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         fill_in 'search', with:'sample'
         select "未着手", from: "status"
-        click_on 'Search'
+        find("#status_search").click
         expect(page).to have_content 'newest'
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe 'Task', type: :system do
         visit new_task_path
         fill_in 'task[title]', with:'task_title'
         fill_in 'task[content]', with:'task_content'
-        click_on 'Create my task'
+        click_on '登録する'
         expect(page).to have_content '作成しました！'
       end
     end
